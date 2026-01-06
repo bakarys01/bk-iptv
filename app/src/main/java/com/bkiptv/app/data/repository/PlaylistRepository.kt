@@ -146,97 +146,84 @@ class PlaylistRepository @Inject constructor(
         
         // Parse M3U content
         val entries = m3uParser.parse(content)
-            
-            // Clear existing content for this playlist
-            channelDao.deleteChannelsByPlaylist(playlistId)
-            movieDao.deleteMoviesByPlaylist(playlistId)
-            seriesDao.deleteSeriesByPlaylist(playlistId)
-            
-            // Categorize and store entries
-            val channels = mutableListOf<ChannelEntity>()
-            val movies = mutableListOf<MovieEntity>()
-            val seriesMap = mutableMapOf<String, MutableList<M3UEntry>>()
-            
-            for (entry in entries) {
-                when (entry.contentType) {
-                    ContentType.LIVE_TV -> {
-                        channels.add(entryToChannel(entry, playlistId))
-                    }
-                    ContentType.MOVIE -> {
-                        movies.add(entryToMovie(entry, playlistId))
-                    }
-                    ContentType.EPISODE, ContentType.SERIES -> {
-                        val seriesName = entry.seriesName ?: entry.groupTitle ?: "Unknown Series"
-                        seriesMap.getOrPut(seriesName) { mutableListOf() }.add(entry)
-                    }
-                    ContentType.UNKNOWN -> {
-                        // Default to channel
-                        channels.add(entryToChannel(entry, playlistId))
-                    }
+        
+        // Clear existing content for this playlist
+        channelDao.deleteChannelsByPlaylist(playlistId)
+        movieDao.deleteMoviesByPlaylist(playlistId)
+        seriesDao.deleteSeriesByPlaylist(playlistId)
+        
+        // Categorize and store entries
+        val channels = mutableListOf<ChannelEntity>()
+        val movies = mutableListOf<MovieEntity>()
+        val seriesMap = mutableMapOf<String, MutableList<M3UEntry>>()
+        
+        for (entry in entries) {
+            when (entry.contentType) {
+                ContentType.LIVE_TV -> {
+                    channels.add(entryToChannel(entry, playlistId))
+                }
+                ContentType.MOVIE -> {
+                    movies.add(entryToMovie(entry, playlistId))
+                }
+                ContentType.EPISODE, ContentType.SERIES -> {
+                    val seriesName = entry.seriesName ?: entry.groupTitle ?: "Unknown Series"
+                    seriesMap.getOrPut(seriesName) { mutableListOf() }.add(entry)
+                }
+                ContentType.UNKNOWN -> {
+                    // Default to channel
+                    channels.add(entryToChannel(entry, playlistId))
                 }
             }
-            
-            // Insert channels
-            if (channels.isNotEmpty()) {
-                channelDao.insertChannels(channels)
-            }
-            
-            // Insert movies
-            if (movies.isNotEmpty()) {
-                movieDao.insertMovies(movies)
-            }
-            
-            // Insert series and episodes
-            for ((seriesName, episodeEntries) in seriesMap) {
-                val series = SeriesEntity(
-                    playlistId = playlistId,
-                    name = seriesName,
-                    posterUrl = episodeEntries.firstOrNull()?.logoUrl,
-                    genre = episodeEntries.firstOrNull()?.groupTitle,
-                    episodeCount = episodeEntries.size,
-                    seasonCount = episodeEntries.mapNotNull { it.seasonNumber }.distinct().size
-                )
-                val seriesId = seriesDao.insertSeries(series)
-                
-                val episodes = episodeEntries.map { entry ->
-                    EpisodeEntity(
-                        seriesId = seriesId,
-                        title = entry.name,
-                        streamUrl = entry.url,
-                        thumbnailUrl = entry.logoUrl,
-                        seasonNumber = entry.seasonNumber ?: 1,
-                        episodeNumber = entry.episodeNumber ?: 0,
-                        headers = entry.headers.takeIf { it.isNotEmpty() }?.let { gson.toJson(it) }
-                    )
-                }
-                episodeDao.insertEpisodes(episodes)
-            }
-            
-            // Update status to success
-            playlistDao.updateSyncStatus(
-                id = playlistId,
-                timestamp = System.currentTimeMillis(),
-                status = SyncStatus.SUCCESS,
-                error = null,
-                channelCount = channels.size,
-                movieCount = movies.size,
-                seriesCount = seriesMap.size
-            )
-            
-            Result.success(Unit)
-        } catch (e: Exception) {
-            // Update status to failed
-            playlistDao.updateSyncStatus(
-                id = playlistId,
-                timestamp = System.currentTimeMillis(),
-                status = SyncStatus.FAILED,
-                error = e.message,
-                channelCount = playlist.channelCount,
-                movieCount = playlist.movieCount,
-                seriesCount = playlist.seriesCount
-            )
-            Result.failure(e)
         }
+        
+        // Insert channels
+        if (channels.isNotEmpty()) {
+            channelDao.insertChannels(channels)
+        }
+        
+        // Insert movies
+        if (movies.isNotEmpty()) {
+            movieDao.insertMovies(movies)
+        }
+        
+        // Insert series and episodes
+        for ((seriesName, episodeEntries) in seriesMap) {
+            val series = SeriesEntity(
+                playlistId = playlistId,
+                name = seriesName,
+                posterUrl = episodeEntries.firstOrNull()?.logoUrl,
+                genre = episodeEntries.firstOrNull()?.groupTitle,
+                episodeCount = episodeEntries.size,
+                seasonCount = episodeEntries.mapNotNull { it.seasonNumber }.distinct().size
+            )
+            val seriesId = seriesDao.insertSeries(series)
+            
+            val episodes = episodeEntries.map { entry ->
+                EpisodeEntity(
+                    seriesId = seriesId,
+                    title = entry.name,
+                    streamUrl = entry.url,
+                    thumbnailUrl = entry.logoUrl,
+                    seasonNumber = entry.seasonNumber ?: 1,
+                    episodeNumber = entry.episodeNumber ?: 0,
+                    headers = entry.headers.takeIf { it.isNotEmpty() }?.let { gson.toJson(it) }
+                )
+            }
+            episodeDao.insertEpisodes(episodes)
+        }
+        
+        // Update status to success
+        playlistDao.updateSyncStatus(
+            id = playlistId,
+            timestamp = System.currentTimeMillis(),
+            status = SyncStatus.SUCCESS,
+            error = null,
+            channelCount = channels.size,
+            movieCount = movies.size,
+            seriesCount = seriesMap.size
+        )
+        
+        return Result.success(Unit)
     }
 
     /**
