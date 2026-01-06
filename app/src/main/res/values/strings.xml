@@ -1,0 +1,135 @@
+<resources>
+    <string name="app_name">BK IPTV</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Accueil</string>
+    <string name="nav_live_tv">TV en Direct</string>
+    <string name="nav_movies">Films</string>
+    <string name="nav_series">Séries</string>
+    <string name="nav_favorites">Favoris</string>
+    <string name="nav_search">Rechercher</string>
+    <string name="nav_settings">Paramètres</string>
+    
+    <!-- Home Screen -->
+    <string name="home_continue_watching">Reprendre la lecture</string>
+    <string name="home_recently_added">Récemment ajouté</string>
+    <string name="home_popular">Populaire</string>
+    
+    <!-- Live TV -->
+    <string name="live_tv_countries">Pays</string>
+    <string name="live_tv_categories">Catégories</string>
+    <string name="live_tv_channels">Chaînes</string>
+    <string name="live_tv_all_channels">Toutes les chaînes</string>
+    <string name="live_indicator">EN DIRECT</string>
+    
+    <!-- Movies & Series -->
+    <string name="movies_genres">Genres</string>
+    <string name="series_seasons">Saisons</string>
+    <string name="series_episodes">Épisodes</string>
+    <string name="season_format">Saison %d</string>
+    <string name="episode_format">Épisode %d</string>
+    
+    <!-- EPG -->
+    <string name="epg_title">Guide TV</string>
+    <string name="epg_now">Maintenant</string>
+    <string name="epg_next">Après</string>
+    <string name="epg_no_program">Aucun programme</string>
+    
+    <!-- Player -->
+    <string name="player_play">Lecture</string>
+    <string name="player_pause">Pause</string>
+    <string name="player_rewind">Reculer</string>
+    <string name="player_forward">Avancer</string>
+    <string name="player_quality">Qualité</string>
+    <string name="player_audio">Audio</string>
+    <string name="player_subtitles">Sous-titres</string>
+    <string name="player_fullscreen">Plein écran</string>
+    <string name="player_info">Informations</string>
+    <string name="player_error">Erreur de lecture</string>
+    <string name="player_retry">Réessayer</string>
+    <string name="player_loading">Chargement…</string>
+    
+    <!-- Playlist Management -->
+    <string name="playlist_add">Ajouter une playlist</string>
+    <string name="playlist_add_url">Depuis une URL</string>
+    <string name="playlist_add_file">Depuis un fichier</string>
+    <string name="playlist_add_qr">Scanner QR Code</string>
+    <string name="playlist_name">Nom de la playlist</string>
+    <string name="playlist_url">URL de la playlist</string>
+    <string name="playlist_refresh">Actualiser</string>
+    <string name="playlist_delete">Supprimer</string>
+    <string name="playlist_enable">Activer</string>
+    <string name="playlist_disable">Désactiver</string>
+    <string name="playlist_last_update">Dernière mise à jour: %s</string>
+    <string name="playlist_syncing">Synchronisation…</string>
+    <string name="playlist_sync_success">Playlist mise à jour</string>
+    <string name="playlist_sync_error">Erreur de synchronisation</string>
+    
+    <!-- Search -->
+    <string name="search_hint">Rechercher chaînes, films, séries…</string>
+    <string name="search_no_results">Aucun résultat</string>
+    <string name="search_results_count">%d résultats</string>
+    
+    <!-- Favorites -->
+    <string name="favorites_empty">Aucun favori</string>
+    <string name="favorites_add">Ajouter aux favoris</string>
+    <string name="favorites_remove">Retirer des favoris</string>
+    
+    <!-- History -->
+    <string name="history_title">Historique</string>
+    <string name="history_empty">Aucun historique</string>
+    <string name="history_clear">Effacer l\'historique</string>
+    
+    <!-- Settings -->
+    <string name="settings_general">Général</string>
+    <string name="settings_playback">Lecture</string>
+    <string name="settings_appearance">Apparence</string>
+    <string name="settings_playlists">Playlists</string>
+    <string name="settings_profiles">Profils</string>
+    <string name="settings_parental">Contrôle parental</string>
+    <string name="settings_about">À propos</string>
+    
+    <string name="settings_dark_mode">Mode sombre</string>
+    <string name="settings_dark_mode_system">Système</string>
+    <string name="settings_dark_mode_on">Activé</string>
+    <string name="settings_dark_mode_off">Désactivé</string>
+    
+    <string name="settings_auto_play">Lecture automatique</string>
+    <string name="settings_auto_refresh">Actualisation automatique</string>
+    <string name="settings_refresh_interval">Intervalle d\'actualisation</string>
+    
+    <!-- Parental Control -->
+    <string name="parental_enter_pin">Entrer le PIN</string>
+    <string name="parental_set_pin">Définir un PIN</string>
+    <string name="parental_change_pin">Changer le PIN</string>
+    <string name="parental_wrong_pin">PIN incorrect</string>
+    <string name="parental_locked">Contenu verrouillé</string>
+    
+    <!-- Profiles -->
+    <string name="profile_add">Ajouter un profil</string>
+    <string name="profile_edit">Modifier</string>
+    <string name="profile_delete">Supprimer</string>
+    <string name="profile_name">Nom du profil</string>
+    <string name="profile_switch">Changer de profil</string>
+    
+    <!-- QR Scanner -->
+    <string name="qr_scanner_title">Scanner QR Code</string>
+    <string name="qr_scanner_hint">Pointez vers un QR Code contenant l\'URL de la playlist</string>
+    <string name="qr_scanner_permission">Permission caméra requise</string>
+    
+    <!-- Errors -->
+    <string name="error_network">Erreur réseau</string>
+    <string name="error_stream">Flux non disponible</string>
+    <string name="error_parse">Erreur de lecture du fichier</string>
+    <string name="error_unknown">Erreur inconnue</string>
+    <string name="error_retry">Réessayer</string>
+    
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="delete">Supprimer</string>
+    <string name="confirm">Confirmer</string>
+    <string name="loading">Chargement…</string>
+    <string name="empty_list">Liste vide</string>
+</resources>
