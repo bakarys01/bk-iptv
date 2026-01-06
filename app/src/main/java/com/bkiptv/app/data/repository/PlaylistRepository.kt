@@ -220,9 +220,17 @@ class PlaylistRepository @Inject constructor(
 
         okHttpClient.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
-                throw Exception("Failed to download playlist: ${response.code}")
+                val errorMessage = when (response.code) {
+                    400 -> "URL invalide ou mal formée"
+                    401, 403 -> "Authentification requise ou accès refusé"
+                    404 -> "Playlist introuvable sur le serveur"
+                    500, 502, 503 -> "Le serveur IPTV est temporairement indisponible"
+                    in 800..899 -> "Erreur IPTV: Vérifiez votre abonnement ou identifiants (code ${response.code})"
+                    else -> "Échec du téléchargement (code ${response.code})"
+                }
+                throw Exception(errorMessage)
             }
-            response.body?.string() ?: throw Exception("Empty response")
+            response.body?.string() ?: throw Exception("Réponse vide du serveur")
         }
     }
 
