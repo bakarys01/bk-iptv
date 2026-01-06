@@ -23,6 +23,10 @@ data class PlaylistEntity(
     val isAutoRefresh: Boolean = true,
     val refreshIntervalHours: Int = 24,
     
+    // Xtream Codes credentials
+    val xtreamUsername: String? = null,
+    val xtreamPassword: String? = null,
+    
     val lastSyncTimestamp: Long? = null,
     val lastSyncStatus: SyncStatus = SyncStatus.PENDING,
     val lastSyncError: String? = null,
