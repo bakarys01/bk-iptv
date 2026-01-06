@@ -301,7 +301,7 @@ class PlaylistRepository @Inject constructor(
                     ),
                     posterUrl = stream.streamIcon,
                     genre = vodCategoryMap[stream.categoryId],
-                    rating = stream.rating5Based?.toString()
+                    rating = stream.rating5Based?.toFloat()
                 )
             }
             if (movies.isNotEmpty()) {
@@ -319,7 +319,7 @@ class PlaylistRepository @Inject constructor(
                     name = xtreamSeries.name ?: "Unknown",
                     posterUrl = xtreamSeries.cover,
                     genre = xtreamSeries.genre,
-                    plot = xtreamSeries.plot
+                    description = xtreamSeries.plot
                 )
                 val seriesId = seriesDao.insertSeries(series)
                 seriesCount++
@@ -339,7 +339,7 @@ class PlaylistRepository @Inject constructor(
                                 thumbnailUrl = ep.info?.movieImage,
                                 seasonNumber = ep.season ?: 1,
                                 episodeNumber = ep.episodeNum ?: 0,
-                                plot = ep.info?.plot
+                                description = ep.info?.plot
                             )
                         }
                         if (episodes.isNotEmpty()) {
